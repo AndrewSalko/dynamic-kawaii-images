@@ -1,4 +1,5 @@
 dynamic-kawaii-images
 =====================
 
-Creates dynamically new image (by size)
+For WordPress site.
+All directories assumed to be in 'wp-content'

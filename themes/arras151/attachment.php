@@ -85,7 +85,7 @@
 					//good file name. 
 					$fileNameGood='kawaii-mobile.com.'.$shortFileName.'.'.$resName.'.'.$fileExt;
 					
-					echo '<a href="'. $postPermLink.'custom/'.$fileNameGood.'?newsize='.$resName.'&code='.$secretCode.'&id='.$imageID.'" target="_blank">'.$linkName.'</a><br/>';
+					echo '<a href="'. $postPermLink.'custom/'.$fileNameGood.'?newsize='.$resName.'&amp;code='.$secretCode.'&amp;id='.$imageID.'" target="_blank">'.$linkName.'</a><br/>';
 				}
 			}
 				

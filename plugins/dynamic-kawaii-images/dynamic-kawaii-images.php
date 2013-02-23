@@ -9,6 +9,10 @@ Description: A helper plugin for a <a href="http://kawaii-mobile.com">http://kaw
 
 if (!class_exists("DynamicKawaiiImages")) 
 {
+	include ('kawaii-resolution.php');
+	include ('encryptor-kawaii.php');
+	include ('simpleimage.php');
+
 	class DynamicKawaiiImages
 	{
 
@@ -76,24 +80,149 @@ if (!class_exists("DynamicKawaiiImages"))
 	        exit();			
 		}		
 
+		// Creates fake attach file name from real post ID
+		// Returns FALSE if failed
+		// Out params:
+		public static function CreateImageElement($imageID, $resolution, &$shortDescription)
+		{
+			$imgURL=wp_get_attachment_url($imageID);
+
+			//full URL to attach page
+			$postPermLink=post_permalink($imageID);			
+			$fileName = basename($imgURL);
+
+			//parts of file name..we need it later
+			//Madlax.Margaret-Burton.Elenore-Baker.Madlax-HTC-Cha-Cha-wallpaper.Vanessa-Rene.320x480.jpg
+			$nameParts=explode('.', $fileName);			
+			$shortFileName=$nameParts[0];
+
+			$namePartsCount=count($nameParts);
+			if($namePartsCount>2)
+			{
+				$shortFileName='';
+				//если можно, отрежем часть с разрешением
+				for($q=0; $q<$namePartsCount-2; $q++)
+				{
+					if(strlen($shortFileName)>0)
+					{
+						$shortFileName.= '.';
+					}
+
+					$shortFileName.=$nameParts[$q];					
+				}				
+			}
+			
+			$fileExt=end($nameParts);//extension (jpg)
+
+			$fileNameGood='kawaii-mobile.com.'.$shortFileName.'.'.$resolution.'.'.$fileExt;
+
+			$nowTime = (string)time();
+			$encryptor=new EncryptorKawaii();
+			$secretCode=$encryptor->Encode($nowTime);
+            			
+			$imgLink=$postPermLink.'custom/'.$fileNameGood.'?newsize='.$resolution.'&amp;code='.$secretCode.'&amp;id='.$imageID;
+
+			$resParts=explode('x',$resolution);
+			if(count($resParts)!=2)
+			{
+				return FALSE;
+			}
+
+			$imgWidth=$resParts[0];
+			$imgHeight=$resParts[1];
+
+			$resDetector=new KawaiiResolutionDetector();
+			$linkNameCurrent=$resDetector->GetResolutionDescription($imgWidth, $imgHeight);
+
+			//prepare ALT text for image. Just use fileName,replace '-' chars with spaces
+			$fileNameForALT=str_replace('-', ' ', $shortFileName);
+
+			$imgAlt=$fileNameForALT .' '. $linkNameCurrent;
+			
+			$imgNode='<a href="'.$imgLink.'"><img src="'. $imgLink .'" alt="'. $imgAlt .'" title="'. $imgAlt. '" width="'.$imgWidth.'" height="'.$imgHeight.'"></img></a>';
+
+			$shortDescription=$imgAlt;
+
+			return $imgNode;
+
+		}//CreateImageElement
+
+
 		function do_template_redirect()
 		{	
+			global $wp_query;
+
 			/*					
 		    if(is_404()===FALSE)
 			{
 				return;	
 			}*/
 
-			//another check method for our special URL
 			$url = $_SERVER['REQUEST_URI'];
+
+						
+			if (strpos($url,'/custom-image/') == true) 
+			{												
+				//here we extract attach ID from URL, and resolution:
+				//custom-image/(attachID)/(320x240)
+				$splittedValues=explode('/',$url);
+				if(count($splittedValues)<3)
+				{
+					//assume 3 items at least:custom-image,attachID,320x240
+					return;
+				}
+
+				//take last portion - this is resolution:
+				$resolution=end($splittedValues);
+				$attachID=prev($splittedValues);
+
+				//check if we have such attachID in our base:
+				$testPermLink=post_permalink($attachID);
+				if($testPermLink===FALSE)
+				{
+					return;
+				}
+
+				$shortDescr;
+				$imgNode=DynamicKawaiiImages::CreateImageElement($attachID, $resolution, $shortDescr);
+
+				$wp_query->is_404 = false;
+				status_header('200');
+
+				get_header();
+                
+                $itPost=get_post($attachID);
+				$parentPost=$itPost;
+					
+				echo '<a href="' . get_permalink( $parentPost ) . '">'. get_the_title($parentPost) .'</a>';
+    			
+				echo '<h1>Image size: ' . $resolution . '</h1>';     
+
+				$resDetector=new KawaiiResolutionDetector();
+				$mobilePhones=$resDetector->GetResolutionMobilePhones($resolution);
+				if($mobilePhones!=NULL)
+				{
+					echo '<p>Wallpaper for mobile phones: ' . $mobilePhones. '</p>';
+				}
+	
+				echo '<div id="container" class="single-attachment">';
+				echo '	<div id="content" role="main">';
+				echo $imgNode;
+				echo '	</div><!-- #content -->';
+				echo '</div><!-- #container -->';
+				
+				get_sidebar();
+				get_footer();
+
+				return;			
+			}//if custom-image - special fake page
+			
+
+			//another check method for our special URL
 			if (strpos($url,'/custom/') == false) 
 			{
 				return;
 			}
-
-			//error_log("do_template_redirect\r\n", 3, "d:/dynamic-images.log");
-			//$time[] =  microtime(true);
-			//sleep(3);
 
 			if(array_key_exists('newsize', $_GET)===FALSE ||
 				array_key_exists('code', $_GET)===FALSE ||
@@ -107,8 +236,7 @@ if (!class_exists("DynamicKawaiiImages"))
 			$newsize=$_GET['newsize'];
 			$imageID=$_GET['id'];			
 
-			//--- Блок защиты от прямой ссылки на генерируемое изображение
-			include ('encryptor-kawaii.php');
+			//--- Блок защиты от прямой ссылки на генерируемое изображение			
 			$nowTime = time();
 			$encryptor=new EncryptorKawaii();
 			$timeCode=(int)$encryptor->Decode($code);
@@ -175,18 +303,11 @@ if (!class_exists("DynamicKawaiiImages"))
 
 				if(readfile($resultFileName)>0)
 				{
-					//$time[] =  microtime(true);					
-					//$diffTime=$time[1] - $time[0];
-					//error_log("do_template_redirect cached:". $diffTime ."\r\n", 3, "d:/dynamic-images.log");
-
         			die();
 					return;
 				}
 			}
-
-			include ('simpleimage.php');
-			include ('kawaii-resolution.php');
-            
+           
 			$attMeta=wp_get_attachment_metadata($imageID);
             if($attMeta===FALSE)
 			{
@@ -240,10 +361,6 @@ if (!class_exists("DynamicKawaiiImages"))
 			{
 				$image->resize($destWidth, $destHeight);
 
-				//$time[] =  microtime(true);					
-				//$diffTime=$time[1] - $time[0];
-				//error_log("do_template_redirect IsSimpleResize:". $diffTime ."\r\n", 3, "d:/dynamic-images.log");
-
 				DynamicKawaiiImages::OutputFileToBrowser($image, $fileNameForSave);
 				return;
 			}
@@ -265,7 +382,91 @@ if (!class_exists("DynamicKawaiiImages"))
 					    
 		}//do_template_redirect
 
-	}
+		function do_content($content)
+		{
+			global $post;
+
+			if($post->post_type != 'attachment' || is_feed() || is_home() || !is_single())
+			{
+				return $content;//do nothing
+			}
+			
+			$imageID=$post->ID;
+			$imgURL=wp_get_attachment_url($imageID);
+		
+			//full URL to attach page
+			$postPermLink=post_permalink($imageID);			
+			$fileName = basename($imgURL);
+
+			//parts of file name..we need it later
+			//Madlax.Margaret-Burton.Elenore-Baker.Madlax-HTC-Cha-Cha-wallpaper.Vanessa-Rene.320x480.jpg
+			$nameParts=explode('.', $fileName);			
+			$shortFileName=$nameParts[0];
+
+			$namePartsCount=count($nameParts);
+
+			if($namePartsCount>2)
+			{
+				$shortFileName='';
+				//если можно, отрежем часть с разрешением
+				for($q=0; $q<$namePartsCount-2; $q++)
+				{
+					if(strlen($shortFileName)>0)
+					{
+						$shortFileName.= '.';
+					}
+
+					$shortFileName.=$nameParts[$q];					
+				}				
+			}//if
+			
+			$fileExt=end($nameParts);//extension (jpg)
+
+			$attMeta=wp_get_attachment_metadata($imageID);
+			if($attMeta==FALSE)
+			{
+				return $content;//something wrong...default
+			}
+
+			$attWidth=$attMeta['width'];
+			$attHeight=$attMeta['height'];            		
+
+			//get available resolutions for this size:
+			$resDetector=new KawaiiResolutionDetector();
+			$resArr=$resDetector->GetAvailableResolutions($attWidth, $attHeight);
+
+			//secret code generation	
+			$nowTime = (string)time();
+			$encryptor=new EncryptorKawaii();
+			$secretCode=$encryptor->Encode($nowTime);
+				
+			$linkNameCurrent=$resDetector->GetResolutionDescription($attWidth, $attHeight);
+
+			$mainLink='<a href="'. $imgURL.'" target="_blank">'.$linkNameCurrent.'</a>';
+
+			$content .= '<br/>';
+			$content .= $mainLink;            		
+			$content .= '<br/>';
+
+			foreach ($resArr as $resName => $resParams)
+			{
+				$linkName=$resName;
+				if (array_key_exists('description', $resParams))
+				{
+					$linkName=$linkName . ' (' . $resParams['description']. ')';
+				}
+
+				//good file name. 
+				$addLink='<a href="'.$postPermLink .'custom-image/'. $imageID .'/'.$resName. '" target="_blank">'.$linkName.'</a><br/>';
+				$content .= $addLink;
+			}
+						
+			
+			return $content;
+		}//do_content
+
+
+	}//class
 
 	if (class_exists("DynamicKawaiiImages")) 
 	{
@@ -279,7 +480,9 @@ if (isset($pluginDynamicKawaiiImages))
 {
 	//Actions   template_redirect  wp
 	add_action('wp', array('DynamicKawaiiImages', 'do_template_redirect'));
-	
+
+	add_filter('the_content', array('DynamicKawaiiImages', 'do_content'));
+
 }
 
 

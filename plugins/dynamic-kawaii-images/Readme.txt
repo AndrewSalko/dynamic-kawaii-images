@@ -1,6 +1,12 @@
+
+
+
+http://www.wordpressplugins.ru/function_reference/get_header.html
+
+-------------------------
+
 Redirect info:
 http://dev.xiligroup.com/?p=27
-
 
 
 

@@ -1,4 +1,14 @@
 
+http://kawaii-mobile.com/2013/02/high-school-dxd-2/high-school-dxd-akeno-himejima-htc-one-x-wallpaper-720x1280/custom-image/7594/320x480/ 
+http://kawaii-mobile.com/2013/02/high-school-dxd-2/high-school-dxd-akeno-himejima-htc-one-x-wallpaper-720x1280/custom-image/7594/480x640/ 
+http://kawaii-mobile.com/2013/02/koi-to-senkyo-to-chocolate/koi-to-senkyo-to-chocolate-ai-sarue-htc-windows-phone-8x-wallpaper-kii-monzennaka-720x1280/custom-image/7674/480x800/ 
+
+TEST:
+http://kawaii-mobile.org/2013/02/koi-to-senkyo-to-chocolate/koi-to-senkyo-to-chocolate-ai-sarue-htc-windows-phone-8x-wallpaper-kii-monzennaka-720x1280/custom-image/6088/480x800
+
+http://kawaii-mobile.org/2013/02/koi-to-senkyo-to-chocolate/koi-to-senkyo-to-chocolate-ai-sarue-htc-windows-phone-8x-wallpaper-kii-monzennaka-720x1280/custom-image/6088/480x800/
+
+
 
 
 http://www.wordpressplugins.ru/function_reference/get_header.html

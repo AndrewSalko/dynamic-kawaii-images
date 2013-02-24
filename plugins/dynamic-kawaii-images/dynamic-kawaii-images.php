@@ -85,6 +85,31 @@ if (!class_exists("DynamicKawaiiImages"))
 		// Out params:
 		public static function CreateImageElement($imageID, $resolution, &$shortDescription)
 		{
+			//check resolution
+			$attMeta=wp_get_attachment_metadata($imageID);
+            if($attMeta===FALSE)
+			{
+				return;
+			}
+					
+			$attWidth=(int)$attMeta['width'];
+			$attHeight=(int)$attMeta['height'];
+						                       					
+			$resParts=explode('x',$resolution);
+			if(count($resParts)!=2)
+			{
+				return FALSE;
+			}
+
+			$imgWidth=$resParts[0];
+			$imgHeight=$resParts[1];
+
+			$resDetector=new KawaiiResolutionDetector();
+			if($resDetector->IsResolutionAvailable($attWidth, $attHeight, $imgWidth, $imgHeight)==FALSE)
+			{
+				return FALSE;
+			}
+
 			$imgURL=wp_get_attachment_url($imageID);
 
 			//full URL to attach page
@@ -122,16 +147,6 @@ if (!class_exists("DynamicKawaiiImages"))
             			
 			$imgLink=$postPermLink.'custom/'.$fileNameGood.'?newsize='.$resolution.'&amp;code='.$secretCode.'&amp;id='.$imageID;
 
-			$resParts=explode('x',$resolution);
-			if(count($resParts)!=2)
-			{
-				return FALSE;
-			}
-
-			$imgWidth=$resParts[0];
-			$imgHeight=$resParts[1];
-
-			$resDetector=new KawaiiResolutionDetector();
 			$linkNameCurrent=$resDetector->GetResolutionDescription($imgWidth, $imgHeight);
 
 			//prepare ALT text for image. Just use fileName,replace '-' chars with spaces
@@ -165,7 +180,10 @@ if (!class_exists("DynamicKawaiiImages"))
 			{												
 				//here we extract attach ID from URL, and resolution:
 				//custom-image/(attachID)/(320x240)
-				$splittedValues=explode('/',$url);
+				//Very important: last slash may be!
+				$trimmedURL=trim($url,'/');
+
+				$splittedValues=explode('/',$trimmedURL);
 				if(count($splittedValues)<3)
 				{
 					//assume 3 items at least:custom-image,attachID,320x240
@@ -185,6 +203,10 @@ if (!class_exists("DynamicKawaiiImages"))
 
 				$shortDescr;
 				$imgNode=DynamicKawaiiImages::CreateImageElement($attachID, $resolution, $shortDescr);
+				if($imgNode===FALSE)
+				{
+					return;
+				}
 
 				$wp_query->is_404 = false;
 				status_header('200');
@@ -481,7 +503,7 @@ if (isset($pluginDynamicKawaiiImages))
 	//Actions   template_redirect  wp
 	add_action('wp', array('DynamicKawaiiImages', 'do_template_redirect'));
 
-	add_filter('the_content', array('DynamicKawaiiImages', 'do_content'));
+	add_filter('the_content', array('DynamicKawaiiImages', 'do_content'),1);
 
 }
 

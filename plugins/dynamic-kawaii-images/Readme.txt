@@ -1,4 +1,36 @@
 
+320x240
+
+	Nokia E5, Nokia C3
+
+----------
+480x854
+
+Fly IQ450 Horizon Black
+Gigabyte GSmart G1362
+Sony ST26i Xperia J Black
+Sony ST25i Xperia U Black Pink
+Sony MT27i Xperia Sola Black
+
+----------
+540x960
+
+Magic W710 Socrat
+ZTE V970
+Texet TM-4504
+Acer Liquid Gallant Duo E350
+Fly IQ443
+Huawei U8836D-1 Ascend G500
+Acer Liquid E1 Duo V360
+Huawei U8950-1 Ascend Honor Pro G600
+LG P765 Optimus L9
+Sony LT22i Xperia P
+HTC One S
+
+
+----------
+
+
 http://kawaii-mobile.com/2013/02/high-school-dxd-2/high-school-dxd-akeno-himejima-htc-one-x-wallpaper-720x1280/custom-image/7594/320x480/ 
 http://kawaii-mobile.com/2013/02/high-school-dxd-2/high-school-dxd-akeno-himejima-htc-one-x-wallpaper-720x1280/custom-image/7594/480x640/ 
 http://kawaii-mobile.com/2013/02/koi-to-senkyo-to-chocolate/koi-to-senkyo-to-chocolate-ai-sarue-htc-windows-phone-8x-wallpaper-kii-monzennaka-720x1280/custom-image/7674/480x800/ 

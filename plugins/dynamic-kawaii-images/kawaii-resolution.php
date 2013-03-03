@@ -13,6 +13,20 @@ class KawaiiResolutionDetector
 							'description'=>'iPhone 5, iPod touch 5'),
 
 		'640x960' => array('width' =>640, 'height'=>960, 'description'=>'iPhone 4, iPod touch 4'),
+		
+
+		'540x960' => array('width' =>540, 'height'=>960,
+							'description'=>'Magic W710, Acer Liquid, LG P765, Sony LT22i Xperia, HTC One S',
+							'mobilephones'=>'Magic W710 Socrat, ZTE V970, Texet TM-4504, Acer Liquid Gallant Duo E350, Fly IQ443, Huawei U8836D-1 Ascend G500, Acer Liquid E1 Duo V360, Huawei U8950-1 Ascend Honor Pro G600, LG P765 Optimus L9, Sony LT22i Xperia P, HTC One S'
+							),
+
+
+		'480x854' => array('width' =>480, 'height'=>854,
+							'description'=>'Fly IQ450, Sony ST26i ST25i  Xperia, Sony MT27i Xperia Sola',
+							'mobilephones'=>'Fly IQ450 Horizon, Gigabyte GSmart G1362, Sony ST26i Xperia J, Sony ST25i Xperia U, Sony MT27i Xperia Sola'
+							),
+
+
 		'480x800' => array('width' =>480, 'height'=>800,
 							'description'=>'Nokia Lumia, Samsung Galaxy S II'							
 							),
@@ -26,7 +40,6 @@ class KawaiiResolutionDetector
 
 		'360x480' => array('width' =>360, 'height'=>480, 'description'=>'BlackBerry'),
 
-		//'320x568' => array('width' =>320, 'height'=>568),//iPhone 5
 		
 		'320x480' => array('width' =>320, 'height'=>480, 
 							'description'=>'iPhone 3G, iPod touch 3',
@@ -36,7 +49,7 @@ class KawaiiResolutionDetector
 
 		'320x455' => array('width' =>320, 'height'=>455, 'description'=>'Samsung Galaxy Ace, SonyEricsson Xperia Arc'),
 		'320x401' => array('width' =>320, 'height'=>401),
-		'320x240' => array('width' =>320, 'height'=>240),
+		'320x240' => array('width' =>320, 'height'=>240, 'description'=>'Nokia E5, Nokia C3'),
 
         '240x400' => array('width' =>240, 'height'=>400, 'description'=>'Sony Ericsson, Samsung, LG'),
 

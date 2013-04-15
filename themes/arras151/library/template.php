@@ -344,7 +344,7 @@ function arras_social_nav() {
 		
 		<?php $twitter_username = arras_get_option('twitter_username'); ?>
 		<?php if ($twitter_username != '') : ?>
-			<li><a id="twitter" title="<?php printf( __( '%s Twitter', 'arras' ), esc_html( get_bloginfo('name'), 1 ) ) ?>" href="http://www.twitter.com/<?php echo $twitter_username ?>/" target="_blank"><?php _e('Twitter', 'arras') ?></a></li>
+			<li><a id="twitter" title="<?php printf( __( '%s Twitter', 'arras' ), esc_html( get_bloginfo('name'), 1 ) ) ?>" href="http://www.twitter.com/<?php echo $twitter_username ?>" target="_blank"><?php _e('Twitter', 'arras') ?></a></li>
 		<?php endif ?>
 		
 		<?php $facebook_profile = arras_get_option('facebook_profile'); ?>

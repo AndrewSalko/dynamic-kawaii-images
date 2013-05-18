@@ -462,6 +462,8 @@ if (!class_exists("DynamicKawaiiImages"))
 			$encryptor=new EncryptorKawaii();
 			$secretCode=$encryptor->Encode($nowTime);
 				
+			$content.="<p style='float:right'>";	
+				
 			$linkNameCurrent=$resDetector->GetResolutionDescription($attWidth, $attHeight);
 
 			$mainLink='<a href="'. $imgURL.'" target="_blank">'.$linkNameCurrent.'</a>';
@@ -483,7 +485,7 @@ if (!class_exists("DynamicKawaiiImages"))
 				$content .= $addLink;
 			}
 						
-			
+			$content.="</p>";
 			return $content;
 		}//do_content
 

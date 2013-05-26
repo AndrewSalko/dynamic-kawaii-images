@@ -5,24 +5,34 @@
 class KawaiiResolutionDetector
 {
 	public $resolutions = array(
+
+		'1440x1280' => array('width' =>1440, 'height'=>1280, 
+							'description'=>'Android Wallpaper for 720x1280 screen',
+							'mobilephones'=>'Samsung Galaxy Note2 N7100, Sony LT28H Xperia ion, Samsung GT-i9300 Galaxy S3, Sony Xperia S, HTC One X S720e, Huawei U9500-1 Ascend D1, Magic THL W3.'),
+
+		'960x800'=> array('width' =>960, 'height'=>800, 
+							'description'=>'Android Wallpaper for 480x800 screen'),
+
 		'720x1280' => array('width' =>720, 'height'=>1280, 
-							'description'=>'Samsung Galaxy S3, HTC Windows Phone, Sony Xperia',
+							'description'=>'Galaxy S3, HTC, Sony Xperia',
 							'mobilephones'=>'Samsung Galaxy Note2 N7100, Sony LT28H Xperia ion, Samsung GT-i9300 Galaxy S3, HTC Windows Phone 8X, Sony LT26i Xperia S, HTC One X S720e, Huawei U9500-1 Ascend D1, Magic THL W3.'),
 
 		'640x1136' => array('width' =>640, 'height'=>1136, 
 							'description'=>'iPhone 5, iPod touch 5'),
 
 		'640x960' => array('width' =>640, 'height'=>960, 'description'=>'iPhone 4, iPod touch 4'),
-		
+
+		'640x480' => array('width' =>640, 'height'=>480, 'description'=>'Android Wallpaper for 320x480 screen'),
+
 
 		'540x960' => array('width' =>540, 'height'=>960,
-							'description'=>'Magic W710, Acer Liquid, LG P765, Sony LT22i Xperia, HTC One S',
+							'description'=>'Acer Liquid, LG P765, HTC One S',
 							'mobilephones'=>'Magic W710 Socrat, ZTE V970, Texet TM-4504, Acer Liquid Gallant Duo E350, Fly IQ443, Huawei U8836D-1 Ascend G500, Acer Liquid E1 Duo V360, Huawei U8950-1 Ascend Honor Pro G600, LG P765 Optimus L9, Sony LT22i Xperia P, HTC One S'
 							),
 
 
 		'480x854' => array('width' =>480, 'height'=>854,
-							'description'=>'Fly IQ450, Sony ST26i ST25i  Xperia, Sony MT27i Xperia Sola',
+							'description'=>'Fly IQ450, Sony Xperia Sola',
 							'mobilephones'=>'Fly IQ450 Horizon, Gigabyte GSmart G1362, Sony ST26i Xperia J, Sony ST25i Xperia U, Sony MT27i Xperia Sola'
 							),
 

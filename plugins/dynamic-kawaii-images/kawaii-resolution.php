@@ -6,12 +6,21 @@ class KawaiiResolutionDetector
 {
 	public $resolutions = array(
 
-		'1440x1280' => array('width' =>1440, 'height'=>1280, 
-							'description'=>'Android Wallpaper for 720x1280 screen',
+		'2160x1920' => array('width' =>2160, 'height'=>1920, 
+							'description'=>'Android Wallpaper 2160x1920',
+							'mobilephones'=>'Samsung Galaxy Note 3, HTC One, LG D802, Samsung Galaxy S4, Sony Xperia Z, Lenovo K900, Magic THL W300, Magic THL W9.'),
+
+
+		'1440x1280' => array('width' =>1440, 'height'=>1280, 											
+							'description'=>'Android Wallpaper 1440x1280',
 							'mobilephones'=>'Samsung Galaxy Note2 N7100, Sony LT28H Xperia ion, Samsung GT-i9300 Galaxy S3, Sony Xperia S, HTC One X S720e, Huawei U9500-1 Ascend D1, Magic THL W3.'),
 
 		'960x800'=> array('width' =>960, 'height'=>800, 
-							'description'=>'Android Wallpaper for 480x800 screen'),
+							'description'=>'Android Wallpaper 960x800'),
+
+		'1080x1920' => array('width' =>1080, 'height'=>1920, 
+							'description'=>'Galaxy S4, HTC One, Xperia Z',
+							'mobilephones'=>'Samsung Galaxy Note 3, HTC One, LG D802, Samsung Galaxy S4, Sony Xperia Z, Lenovo K900, Magic THL W300, Magic THL W9.'),
 
 		'720x1280' => array('width' =>720, 'height'=>1280, 
 							'description'=>'Galaxy S3, HTC, Sony Xperia',
@@ -22,8 +31,8 @@ class KawaiiResolutionDetector
 
 		'640x960' => array('width' =>640, 'height'=>960, 'description'=>'iPhone 4, iPod touch 4'),
 
-		'640x480' => array('width' =>640, 'height'=>480, 'description'=>'Android Wallpaper for 320x480 screen'),
-
+		'640x480' => array('width' =>640, 'height'=>480, 'description'=>'Android Wallpaper 640x480'),
+                                                                         
 
 		'540x960' => array('width' =>540, 'height'=>960,
 							'description'=>'Acer Liquid, LG P765, HTC One S',
@@ -57,7 +66,7 @@ class KawaiiResolutionDetector
 							),
 
 
-		'320x455' => array('width' =>320, 'height'=>455, 'description'=>'Samsung Galaxy Ace, SonyEricsson Xperia Arc'),
+		'320x455' => array('width' =>320, 'height'=>455, 'description'=>'Samsung Galaxy Ace, Sony Xperia Arc'),
 		'320x401' => array('width' =>320, 'height'=>401),
 		'320x240' => array('width' =>320, 'height'=>240, 'description'=>'Nokia E5, Nokia C3'),
 

@@ -30,25 +30,16 @@ if (!class_exists("KawaiiAddThis"))
 			$addContent .= '<a class="addthis_button_favorites"></a>';
 			$addContent .= '<a class="addthis_counter addthis_bubble_style"></a></div>';
 
-			$addContent .= '<script type="text/javascript">';
-			$addContent .= 'addthis.init()';
-			$addContent .= '</script>';
+			$addContent .= '<script type="text/javascript">var addthis_config = { "data_track_addressbar": false };</script>';
+			$addContent .= '<script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52ac5aea586b25eb"></script>';
 	
 			return $addContent;
 		}		
 
 		function do_wp_footer()
 		{						
-			echo '<script type="text/javascript">var addthis_config = { "data_track_addressbar": false };</script>';
-            echo '<script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-52ac5aea586b25eb#async=1"></script>';
-
 			echo KawaiiAddThis::GetScript();
 		}
-
-		function do_content($content)
-		{
-			return $content . KawaiiAddThis::GetScript();
-		}//do_content
 
 
 	}//class
@@ -62,13 +53,6 @@ if (!class_exists("KawaiiAddThis"))
 
 //Actions and Filters	
 if (isset($pluginKawaiiAddThis)) 
-{   
- 			
-    //	add_filter('the_content', array('KawaiiAddThis', 'do_content'),1);
-
+{    			
 	add_filter('wp_footer', array('KawaiiAddThis', 'do_wp_footer'),1);
-
 }
-
-
-

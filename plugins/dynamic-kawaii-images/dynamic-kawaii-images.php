@@ -215,16 +215,16 @@ if (!class_exists("DynamicKawaiiImages"))
                 
                 $itPost=get_post($attachID);
 				$parentPost=$itPost;
-					
+				
+				echo '<h1>'.get_the_title($itPost->post_parent). ' wallpaper</h1>';
 				echo '<a href="' . get_permalink( $parentPost ) . '">'. get_the_title($parentPost) .'</a>';
-    			
-				echo '<h1>Image size: ' . $resolution . '</h1>';     
+				echo '<h2>Wallpaper size: ' . $resolution . '</h2>';
 
 				$resDetector=new KawaiiResolutionDetector();
 				$mobilePhones=$resDetector->GetResolutionMobilePhones($resolution);
 				if($mobilePhones!=NULL)
-				{
-					echo '<p>Wallpaper for mobile phones: ' . $mobilePhones. '</p>';
+				{ 					
+					echo '<p>Background for mobile phones: ' . $mobilePhones. '</p>';
 				}
 	
 				echo '<div id="container" class="single-attachment">';
@@ -490,6 +490,35 @@ if (!class_exists("DynamicKawaiiImages"))
 		}//do_content
 
 
+		function do_get_title($elements)
+		{
+			$url = $_SERVER['REQUEST_URI'];					
+			if (strpos($url,'/custom-image/') == true) 
+			{					
+				//We have our special custom page. Must setup title tag.
+				//$mainTitle=get_the_title($post->post_parent);	
+
+				$trimmedURL=trim($url,'/');
+				$splittedValues=explode('/',$trimmedURL);
+				if(count($splittedValues)<3)
+				{
+					//assume 3 items at least:custom-image,attachID,320x240
+					return;
+				}
+
+				//take last portion - this is resolution:
+				$resolution=end($splittedValues);
+				$attachID=prev($splittedValues);
+                $itPost=get_post($attachID);
+				$parentTitle=get_the_title($itPost->post_parent);
+
+				return $parentTitle. " " . $resolution." wallpaper for mobile phones";
+			}		
+
+			//do nothing,default
+			return $elements;
+		}//do_get_title
+
 	}//class
 
 	if (class_exists("DynamicKawaiiImages")) 
@@ -506,6 +535,8 @@ if (isset($pluginDynamicKawaiiImages))
 	add_action('wp', array('DynamicKawaiiImages', 'do_template_redirect'));
 
 	add_filter('the_content', array('DynamicKawaiiImages', 'do_content'),1);
+
+	add_filter('arras_doctitle', array('DynamicKawaiiImages', 'do_get_title'));
 
 }
 

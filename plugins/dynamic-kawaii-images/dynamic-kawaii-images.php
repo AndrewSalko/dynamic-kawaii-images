@@ -510,14 +510,49 @@ if (!class_exists("DynamicKawaiiImages"))
 				$resolution=end($splittedValues);
 				$attachID=prev($splittedValues);
                 $itPost=get_post($attachID);
-				$parentTitle=get_the_title($itPost->post_parent);
+				$parentTitle=get_the_title($itPost);//->post_parent
+				//split title with dots.
+				$splValues=explode('.',$parentTitle);
 
-				return $parentTitle. " " . $resolution." wallpaper for mobile phones";
-			}		
+				$cleanTitle=get_the_title($itPost->post_parent);
+				if(count($splValues)>0)
+				{
+					$tmpTitle="";
+				   	//the part of resolution (in form 320x480) should be removed
+					foreach($splValues as $splItemKey => $splItemValue)
+					{
+						if(DynamicKawaiiImages::_HasResolutionPart($splItemValue)===false)
+						{
+							$tmpTitle .= $splItemValue;
+                            $tmpTitle .= " ";
+						}
+					}
+					
+					$cleanTitle=$tmpTitle;
+				}
+
+				$rDetect=new KawaiiResolutionDetector();
+				$uniqTitle=	$rDetect->GetUniqTitleOnAttachID($resolution, $attachID);
+				return $cleanTitle. " " . $resolution. " " . $uniqTitle;
+			}
 
 			//do nothing,default
 			return $elements;
 		}//do_get_title
+
+
+		public static function _HasResolutionPart($testLine)
+		{
+			$rDetect=new KawaiiResolutionDetector();
+			$hasRes=$rDetect->HasResolutionInLine($testLine);
+			if($hasRes===true)
+				return true;
+
+			if(strpos($testLine, 'wallpaper')!==false)
+			    return true;
+
+			return false;
+		}
 
 	}//class
 

@@ -1,3 +1,15 @@
+http://stackoverflow.com/questions/7878187/changing-wp-title-from-inside-my-wordpress-plugin
+http://wordpress.stackexchange.com/questions/9185/not-able-to-change-wp-title-using-add-filter
+http://bavotasan.com/2012/filtering-wp_title-for-better-seo/
+
+
+
+
+вызывается из D:\WebServers\home\kawaii-mobile.org\www\wp-content\themes\arras151\header.php 
+
+arras_document_title()
+D:\WebServers\home\kawaii-mobile.org\www\wp-content\themes\arras151\library\template.php 
+
 
 320x240
 

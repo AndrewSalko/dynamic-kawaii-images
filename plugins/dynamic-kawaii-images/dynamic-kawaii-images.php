@@ -462,7 +462,7 @@ if (!class_exists("DynamicKawaiiImages"))
 			$encryptor=new EncryptorKawaii();
 			$secretCode=$encryptor->Encode($nowTime);
 				
-			$content.="<p style='float:right'>";	
+			$content.="<p>";	//style='float:right'
 				
 			$linkNameCurrent=$resDetector->GetResolutionDescription($attWidth, $attHeight);
 

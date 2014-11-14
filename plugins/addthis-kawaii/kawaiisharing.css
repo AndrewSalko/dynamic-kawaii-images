@@ -1,0 +1,30 @@
+
+@media only screen and (min-width: 1081px)
+{
+	.kawaii_sharing_float
+	{
+		left:10px; 
+		top:200px; 
+		background: transparent !important;
+	}
+
+	.kawaii_sharing_standart
+	{
+		display: none;
+		visibility: hidden;
+	}
+}
+
+@media only screen and (max-width: 1080px)
+{
+	.kawaii_sharing_float
+	{
+		display: none;
+		visibility: hidden;
+	}
+
+	.kawaii_sharing_standart
+	{
+	}
+}
+
